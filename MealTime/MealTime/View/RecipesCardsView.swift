@@ -9,13 +9,17 @@ import SwiftUI
 
 struct RecipesCardsView: View {
     let card: RecipeCardModel
+    let isTopCard: Bool
     
     var body: some View {
-        Text(card.name)
-            .font(.headline)
-            .padding(.top, 100)
         
         VStack(alignment: .leading, spacing: 8) {
+            if isTopCard {
+                Text(card.name)
+                    .font(.headline)
+                    .padding(.vertical, 16)
+            }
+                
             Color(.systemFill)
                 .overlay {
                     AsyncImage(url: card.imageURL) { image in
@@ -24,20 +28,25 @@ struct RecipesCardsView: View {
                         ProgressView()
                     }
                 }
-                
-            Text(card.description)
-                .font(.subheadline)
-                .lineLimit(0)
-                .padding()
+                .frame(height: 400)
+                .cornerRadius(12)
+                .clipped()
+            if isTopCard {
+                Text(card.description)
+                    .font(.subheadline)
+                    .lineLimit(0)
+                    .padding(.horizontal)
+                    .padding(.bottom, 16)
+            }
         }
-        .background(Color(.secondarySystemBackground))
+//        .background(Color(.secondarySystemBackground))
         .cornerRadius(12)
-        .padding(.top, 20)
-        .padding(.bottom, 200)
         .padding(.horizontal, 20)
+        .frame(maxWidth: .infinity)
+        
     }
 }
 
 #Preview {
-    RecipesCardsView(card: Mock().mockCard)
+    RecipesCardsView(card: Mock().mockCard, isTopCard: true)
 }
