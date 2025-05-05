@@ -50,7 +50,7 @@ struct TabBarView: View {
                 }
                 .tag(TabTag.cards)
             
-            RecipesListView()
+            RecipesListView(viewModel: RecipesListViewModel())
                 .tabItem {
                     Text("Список")
                     Image(systemName: "list.clipboard")

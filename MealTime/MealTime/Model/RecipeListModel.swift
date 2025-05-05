@@ -7,10 +7,12 @@
 
 import Foundation
 
-struct RecipeListModel: Identifiable, Equatable {
+struct RecipeListModel: Identifiable, Equatable, Hashable {
     let id: String
     let name: String
-    let image: String
+    var image: String
     let readyInMinutes: Int
     let dishTypes: [String]
+    
+    var isLiked: Bool
 }

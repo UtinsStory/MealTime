@@ -18,4 +18,10 @@ final class RecipesListViewModel: ObservableObject {
     func loadRecipes() {
         recipes = Mock.mockList
     }
+    
+    func toggleLike(for recipeId: String) {
+        if let index = recipes.firstIndex(where: { $0.id == recipeId }) {
+            recipes[index].isLiked.toggle()
+        }
+    }
 }
