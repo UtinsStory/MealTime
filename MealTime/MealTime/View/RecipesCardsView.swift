@@ -39,7 +39,6 @@ struct RecipesCardsView: View {
                     .padding(.bottom, 16)
             }
         }
-//        .background(Color(.secondarySystemBackground))
         .cornerRadius(12)
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity)

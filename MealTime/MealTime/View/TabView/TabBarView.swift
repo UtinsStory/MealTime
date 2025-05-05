@@ -43,7 +43,7 @@ struct TabBarView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            RecipesSwipeView(cards: Mock().mockCards)
+            RecipesSwipeView(viewModel: RecipesSwipeViewModel())
                 .tabItem {
                     Text("Карточки")
                     Image(systemName: "square.stack")

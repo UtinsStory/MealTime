@@ -25,7 +25,7 @@ struct MealTimeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RecipesSwipeView(cards: Mock().mockCards)
+            TabBarView()
         }
         .modelContainer(sharedModelContainer)
     }

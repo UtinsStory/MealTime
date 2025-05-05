@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct RecipesSwipeView: View {
-    @State private var cards: [RecipeCardModel]
+    @StateObject private var viewModel: RecipesSwipeViewModel
     @State private var translation: CGSize = .zero
     @State private var draggingCard: RecipeCardModel?
     
-    init(cards: [RecipeCardModel]) {
-        _cards = .init(initialValue: cards)
+    init(viewModel: RecipesSwipeViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
@@ -23,23 +23,35 @@ struct RecipesSwipeView: View {
                 .bold()
                 .padding(.vertical, 20)
 
-            if cards.isEmpty {
+            if viewModel.cards.isEmpty {
                 Spacer()
-                Text("No recipes found")
+                VStack {
+                    Text("No recipes found")
+                        .font(.title)
+                    Button {
+                        viewModel.loadCards()
+                    } label: {
+                        Image(systemName: "arrow.clockwise.circle.fill")
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                            .foregroundStyle(.blue)
+                    }
+
+                }
                 Spacer()
             }
             else {
                 ZStack {
-                    ForEach(cards.reversed().indices, id: \.self) { index in
-                        let card = cards.reversed()[index]
-                        let topCard = cards.first
+                    ForEach(viewModel.cards.reversed().indices, id: \.self) { index in
+                        let card = viewModel.cards.reversed()[index]
+                        let topCard = viewModel.cards.first
                         RecipesCardsView(card: card, isTopCard: card == topCard)
                             .offset(card == draggingCard
                                     ? translation
                                     : .zero )
                             .offset(y: CGFloat(index) * 5)
                             .gesture(dragGesture(for: card))
-                            .shadow(radius: card == cards.last || card == draggingCard
+                            .shadow(radius: card == viewModel.cards.last || card == draggingCard
                                     ? 4
                                     : 0)
                             .zIndex(card == draggingCard ? 1 : 0)
@@ -86,12 +98,14 @@ struct RecipesSwipeView: View {
     }
     
     private func clearSelected() {
-        cards.removeAll { $0 == draggingCard }
+        if let card = draggingCard {
+            viewModel.removeCard(card)
+        }
         draggingCard = nil
         translation = .zero
     }
 }
 
 #Preview {
-    RecipesSwipeView(cards: Mock().mockCards)
+    RecipesSwipeView(viewModel: RecipesSwipeViewModel())
 }
