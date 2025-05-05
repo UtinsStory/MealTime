@@ -47,5 +47,5 @@ struct RecipesCardsView: View {
 }
 
 #Preview {
-    RecipesCardsView(card: Mock().mockCard, isTopCard: true)
+    RecipesCardsView(card: Mock.mockCard, isTopCard: true)
 }

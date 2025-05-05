@@ -16,7 +16,7 @@ final class RecipesSwipeViewModel: ObservableObject {
     }
     
     func loadCards() {
-        cards = Mock().mockCards
+        cards = Mock.mockCards
     }
     
     func removeCard(_ card: RecipeCardModel) {
